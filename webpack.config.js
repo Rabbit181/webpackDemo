@@ -1,10 +1,21 @@
 const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
-    entry: './src/index.js',
+    mode: 'development',
+    entry: {
+        index: './src/index.js',
+        print: './src/print.js'
+    },
+    devtool: 'inline-source-map',
+    // 设置开发服务器, 进行热更新
+    devServer: {
+        static: './dist',
+    },
     output: {
-        filename: 'bundle.js',
+        filename: '[name].bundle.js',
         path: path.resolve(__dirname, 'dist'),
+        clean: true
     },
     module: {
         rules: [
@@ -33,5 +44,14 @@ module.exports = {
                 use: ['xml-loader'],
             },
         ]
-    }
+    },
+    plugins: [
+        new HtmlWebpackPlugin({
+            title: 'Development',
+        }),
+    ],
+    // 将多个entry的runtime代码抽出为公共部分
+    optimization: {
+        runtimeChunk: 'single',
+    },
 };
