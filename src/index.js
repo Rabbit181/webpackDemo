@@ -21,6 +21,7 @@ function component() {
 
     // element.appendChild(myIcon);
 
+    // 
     return element;
 }
 
